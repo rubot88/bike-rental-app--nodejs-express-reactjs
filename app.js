@@ -2,33 +2,11 @@ const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
 
+const bikesRouter = require('./routes/bikes');
+
 const app = express();
 
-const bicycles = [
-    {
-        name: 'Discovery Flint MC',
-        type: 'Mountain bike',
-        price: 10,
-        rented: true
-    },
-    {
-        name: 'Bergamont Horizon N7 Gent',
-        type: 'City bike',
-        price: 15,
-        rented: false
-    },
-    {
-        name: 'Cannondale CAAD Optimo Sora',
-        type: 'Road bike',
-        price: 12.5,
-        rented: false
-    },
-]
-
-
-app.get('/', (req, res) => {
-    res.status(200).json(bicycles);
-});
+app.use('/api/bikes', bikesRouter);
 
 
 const PORT = config.get('port') || 5000;
