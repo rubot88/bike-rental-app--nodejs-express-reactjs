@@ -6,7 +6,7 @@ const bikeSchema = new Schema({
         required: true
     },
     type: {
-        type: Number,
+        type: String,
         required: true
     },
     price: {

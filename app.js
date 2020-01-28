@@ -1,12 +1,23 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 
 const bikesRouter = require('./routes/bikes');
 
 const app = express();
 
-app.use('/api/bikes', bikesRouter);
+app.use(bodyParser.json()) // for parsing application/json
+
+// CORS
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-with, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE");
+    next();
+})
+
+app.use('/bikes', bikesRouter);
 
 
 const PORT = config.get('port') || 5000;
