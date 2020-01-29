@@ -1,13 +1,12 @@
 const express = require('express');
 const config = require('config');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser')
 
 const bikesRouter = require('./routes/bikes');
 
 const app = express();
 
-app.use(bodyParser.json()) // for parsing application/json
+app.use(express.json({ extended: true }))
 
 // CORS
 app.use((req, res, next) => {
