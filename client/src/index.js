@@ -3,12 +3,21 @@ import ReactDOM from 'react-dom';
 import App from './components/app';
 import * as serviceWorker from './serviceWorker';
 
+import ErrorBoundary from './components/error-boundary';
+import AlertState  from './context/alert/AlertState';
+import BikeServiceState from './context/bikeService/BikeServiceState';
+
+
 
 
 ReactDOM.render(
-
-    <App />
-
-    , document.getElementById('root'));
+    <AlertState>
+        <ErrorBoundary>
+            <BikeServiceState>
+                <App />
+            </BikeServiceState>
+        </ErrorBoundary>
+    </AlertState>
+       , document.getElementById('root'));
 
 serviceWorker.unregister();

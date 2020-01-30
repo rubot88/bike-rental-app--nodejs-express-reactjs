@@ -17,11 +17,13 @@ const handlers = {
         ...state,
         bikes: state.bikes.filter(bike => bike.id !== id)
     }),
-    [FETCH_BIKES]: (state, { payload }) => ({ ...state, bikes: payload, loading: false }),
+    [FETCH_BIKES]: (state, { payload }) => ({...state, bikes: payload, loading: false }),
     DEFAULT: state => state
 };
 
-export const bikeServiceReducer = (state, action) => {
+const bikeServiceReducer = (state, action) => {
     const handle = handlers[action.type] || handlers.DEFAULT;
     return handle(state, action);
-}
+};
+
+export default bikeServiceReducer;

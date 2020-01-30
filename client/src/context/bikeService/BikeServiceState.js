@@ -1,13 +1,13 @@
 import React, { useReducer, useContext } from 'react';
 
-import { Provider as BikeServiceProvider } from './bikeServiceContext';
+import BikeServiceContext from './bikeServiceContext';
 import { bikeServiceReducer } from './bikeServiceReducer';
 import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES } from '../types';
 import { AlertContext } from '../alert/alertContext';
 
 const url = '/bikes';
 
-export const BikeServiceState = ({ children }) => {
+ const BikeServiceState = ({ children }) => {
         const initialState = {
             bikes: [],
             loading: false
@@ -91,15 +91,16 @@ export const BikeServiceState = ({ children }) => {
         };
 
         return ( 
-            <BikeServiceProvider value = {
-                {
-                    showLoader,
-                    addBike,
-                    removeBike,
-                    fetchBikes,
-                    loading: state.loading,
-                    bikes: state.bikes
-                }
-            } > { children } 
-            </BikeServiceProvider>);
+            <BikeServiceContext.Provider value = {{
+                showLoader,
+                addBike,
+                removeBike,
+                fetchBikes,
+                loading: state.loading,
+                bikes: state.bikes
+            }}>
+                { children } 
+            </BikeServiceContext.Provider>);
         };
+
+export default BikeServiceState;

@@ -1,3 +1,5 @@
 import { createContext } from 'react';
 
-export const BikeServiceContext = createContext();
+const BikeServiceContext = createContext();
+
+export default BikeServiceContext;
