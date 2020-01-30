@@ -1,11 +1,16 @@
-import React from 'react';
+import React,{useContext,useEffect} from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import AlertContext from '../../context/alert/alertContext';
 import './alert.scss';
 
 const Alert = () => {
-    const { alert } = useContext(AlertContext);
+    const {hide, alert } = useContext(AlertContext);
+
+    useEffect(()=>{
+      const timeoutId =  setTimeout(hide,2000);
+      return ()=> clearTimeout(timeoutId);
+    },[]);
 
     return(
         <CSSTransition

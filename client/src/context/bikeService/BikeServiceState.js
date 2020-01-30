@@ -14,7 +14,7 @@ const url = '/bikes';
         };
 
         const [state, dispatch] = useReducer(bikeServiceReducer, initialState);
-        const { show, hide } = useContext(AlertContext);
+        const { show } = useContext(AlertContext);
 
         const showLoader = () => {
             dispatch({ type: SHOW_LOADER });
@@ -38,7 +38,6 @@ const url = '/bikes';
                         dispatch({ type: FETCH_BIKES, payload }) :
                         show('There are no bikes to show');
                 }
-                setTimeout(hide, 2000);
             } catch (e) {
                 console.log(e);
                 throw new Error();
@@ -66,7 +65,6 @@ const url = '/bikes';
                     });
                     show("Bike was successfully added", 'success');
                 }
-                setTimeout(hide, 2000);
             } catch (e) {
                 console.log(e);
                 throw new Error();
@@ -83,7 +81,6 @@ const url = '/bikes';
                     dispatch({ type: REMOVE_BIKE, payload: id });
                     show("Bike was successfully removed", 'success');
                 }
-                setTimeout(hide, 2000);
             } catch (e) {
                 console.log(e);
                 throw new Error();
