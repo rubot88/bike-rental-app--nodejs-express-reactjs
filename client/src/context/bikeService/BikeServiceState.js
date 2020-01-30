@@ -87,6 +87,10 @@ const url = '/bikes';
             }
         };
 
+        const toggleBikeStatus = id=>{
+            
+        }
+
         return ( 
             <BikeServiceContext.Provider value = {{
                 showLoader,

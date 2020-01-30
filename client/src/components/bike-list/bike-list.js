@@ -1,11 +1,15 @@
-import React from 'react';
+import React,{useContext} from 'react';
+
 import BikeListItem from '../bike-list-item/bike-list-item';
+import BikeServiceContext from '../../context/bikeService/bikeServiceContext';
 
 const BikeList = ({bikes}) => {
+    const {removeBike} =useContext(BikeServiceContext);
 
     const bikesList = bikes.map(bike =>
         bike.isRented ?
-            <li className="list-group-item p-4 mb-3 d-flex justify-content-between align-items-end">
+            <li key={bike.id} 
+            className="list-group-item p-4 mb-3 d-flex justify-content-between align-items-end">
                 <BikeListItem bike={bike} />
                 <div>
                     <button type="button" className="btn btn-danger">Сдать</button>

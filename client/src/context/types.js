@@ -5,3 +5,4 @@ export const HIDE_LOADER = 'HIDE_LOADER';
 export const ADD_BIKE = 'ADD_BIKE';
 export const REMOVE_BIKE = 'REMOVE_BIKE';
 export const FETCH_BIKES = 'FETCH_BIKES';
+export const TOGGLE_BIKE_STATUS = 'TOGGLE_BIKE_STATUS';
