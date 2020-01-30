@@ -31,8 +31,8 @@ function App() {
                 </h4>
                 {loading ? <Loader /> : <BikeList bikes={rented} rented={true} />}
                 <h4 className="mb-3">
-                <span role="img" aria-label="Bicycle">🚲</span>
-                &nbsp;Свободные
+                    <span role="img" aria-label="Bicycle">🚲</span>
+                    &nbsp;Свободные
                 <span>({available.length})</span>
                 </h4>
                 {loading ? <Loader /> : <BikeList bikes={available} rented={false} />}

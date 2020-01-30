@@ -8,6 +8,7 @@ import './bike-list.scss';
 
 
 const BikeList = ({ bikes, rented }) => {
+
     const { removeBike, toggleBikeStatus } = useContext(BikeServiceContext);
 
     const bikesList = bikes.map(bike => {

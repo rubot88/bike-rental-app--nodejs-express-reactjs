@@ -4,19 +4,21 @@ import PropTypes from 'prop-types';
 
 import BikeServiceContext from './bikeServiceContext';
 import bikeServiceReducer from './bikeServiceReducer';
-import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES, TOGGLE_BIKE_STATUS } from '../types';
+import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES, TOGGLE_BIKE_STATUS } from '../actions';
 import AlertContext from '../alert/alertContext';
 
 const url = 'http://localhost:5000/bikes';
 
 
 const BikeServiceState = ({ children }) => {
+
     const initialState = {
         bikes: [],
         loading: false
     };
 
     const [state, dispatch] = useReducer(bikeServiceReducer, initialState);
+
     const { show, hide } = useContext(AlertContext);
 
     const showLoader = () => {
@@ -121,7 +123,7 @@ const BikeServiceState = ({ children }) => {
             console.log(e);
             throw new Error();
         }
-    }
+    };
 
     return (
         <BikeServiceContext.Provider value={{

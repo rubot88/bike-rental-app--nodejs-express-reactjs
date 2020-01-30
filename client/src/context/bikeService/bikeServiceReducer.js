@@ -1,4 +1,4 @@
-import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES, TOGGLE_BIKE_STATUS } from '../types';
+import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES, TOGGLE_BIKE_STATUS } from '../actions';
 
 const handlers = {
     [SHOW_LOADER]: state => ({

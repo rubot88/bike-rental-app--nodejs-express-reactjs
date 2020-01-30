@@ -1,1 +1,3 @@
-import BileListItem from './bike-list-item';
+import BikeListItem from './bike-list-item';
+
+export default BikeListItem;
