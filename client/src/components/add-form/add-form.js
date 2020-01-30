@@ -22,7 +22,7 @@ const AddForm = () => {
     const submitHandler = async event => {
         event.preventDefault();
         if (!title.trim()) {
-            return show('Введите название велосипеда', 'warning');
+            show('Введите название велосипеда', 'warning');
         } else {
             await addBike(form);
             setForm({ ...form, title: '', price: '' });
@@ -39,7 +39,7 @@ const AddForm = () => {
                 className="add-form d-flex justify-content-between p-4 mb-4"
                 onSubmit={submitHandler}>
                 <div className="form-group mr-4 mb-1">
-                    <label htmlFor="bikeTitle">Название велосипеда</label>
+                    <label htmlFor="bikeTitle">Название</label>
                     <input
                         required
                         className="form-control"
@@ -51,7 +51,7 @@ const AddForm = () => {
                         value={title} />
                 </div>
                 <div className="form-group mr-4 mb-1">
-                    <label htmlFor="bikeType">Тип велосипеда</label>
+                    <label htmlFor="bikeType">Тип</label>
                     <select
                         className="form-control"
                         name="type"
@@ -67,6 +67,7 @@ const AddForm = () => {
                         required
                         className="form-control"
                         type="number"
+                        min='0'
                         name="price"
                         id="bikePrice"
                         placeholder="Цена аренды"
