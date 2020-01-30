@@ -1,18 +1,13 @@
-import React,{useContext,useEffect} from 'react';
+import React, { useContext } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import AlertContext from '../../context/alert/alertContext';
 import './alert.scss';
 
 const Alert = () => {
-    const {hide, alert } = useContext(AlertContext);
+    const { alert } = useContext(AlertContext);
 
-    useEffect(()=>{
-      const timeoutId =  setTimeout(hide,2000);
-      return ()=> clearTimeout(timeoutId);
-    },[]);
-
-    return(
+    return (
         <CSSTransition
             in={alert.visible}
             timeout={{
@@ -21,9 +16,8 @@ const Alert = () => {
             }}
             classNames={'alert'}
             mountOnEnter
-            unmountOnExit>           
+            unmountOnExit>
             <div className={`alert alert-${alert.type || 'warning'} `}>
-                <strong className="mr-1">Warning!</strong>
                 {alert.text}
             </div>
         </CSSTransition>

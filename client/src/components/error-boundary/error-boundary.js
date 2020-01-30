@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import ErrorIndicator from '../error-indicator';
 
 
 export default class ErrorBoundary extends Component {
-    state = {
-        hasError: false
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasError: false
+        };
+
     }
 
     componentDidCatch() {
@@ -13,8 +19,13 @@ export default class ErrorBoundary extends Component {
         });
     }
     render() {
+
         if (this.state.hasError) return <ErrorIndicator />;
         return this.props.children;
 
     }
+}
+
+ErrorBoundary.propTypes={
+    children: PropTypes.element.isRequired
 };

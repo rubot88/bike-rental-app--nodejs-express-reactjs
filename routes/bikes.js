@@ -5,9 +5,12 @@ const router = Router();
 
 const mapDataToBikes = (bikes) => {
     return bikes
-        .map(bike => ({
-            ...bike,
-            id: bike._id
+        .map(({ _id, title, type, price, isRented }) => ({
+            id: _id,
+            title,
+            type,
+            price,
+            isRented
         }));
 }
 
@@ -16,10 +19,11 @@ router.get('/', async (req, res) => {
         let bikes = await Bike.find();
 
         bikes = mapDataToBikes(bikes);
+
         res.status(200).json(bikes);
 
     } catch (e) {
-        res.status(404).json({ message: 'Unable to load bikes!' })
+        res.status(404).json({ message: 'Не удалось загрузить велосипеды!' })
     }
 });
 
@@ -30,11 +34,12 @@ router.post('/add', async (req, res) => {
         isRented: false
     });
     try {
-        const savedBike = await bike.save();
-        res.status(201).json(savedBike);
+        let savedBike = await bike.save();
+        savedBike = mapDataToBikes([savedBike]);
+        res.status(201).json(...savedBike);
     } catch (e) {
         console.log('Error: ', e);
-        res.status(500).json({ message: 'Unable to save bike!' })
+        res.status(500).json({ message: 'Не удалось добавить велосипед!' })
     }
 });
 
@@ -46,6 +51,19 @@ router.delete('/remove/:id', async (req, res) => {
     } catch (e) {
         console.log('Error: ', e);
         res.status(500).json({ message: 'Unable to remove bike!' })
+    }
+});
+
+router.post('/edit', async (req, res) => {
+    const { id, isRented } = req.body;
+
+    try {
+        let updatedBike = await Bike.findByIdAndUpdate(id, { isRented: !isRented }, { new: true });
+        updatedBike = mapDataToBikes([updatedBike]);
+        res.status(201).json(...updatedBike);
+    } catch (e) {
+        console.log('Error: ', e);
+        res.status(500).json({ message: 'Не удалось поменять статус велосипеда!' })
     }
 })
 

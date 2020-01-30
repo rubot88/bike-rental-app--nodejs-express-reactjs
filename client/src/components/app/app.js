@@ -10,42 +10,12 @@ import './app.scss';
 import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
-    // const bikes = [
-    //     {
-    //         id: 1,
-    //         title: 'Ardis Force MTB',
-    //         type: 'Велосипед горный',
-    //         price: 75,
-    //         isRented: true
-    //     },
-    //     {
-    //         id: 2,
-    //         title: 'Bergamont Bergamonster',
-    //         type: 'Велосипед городской',
-    //         price: 67,
-    //         isRented: false
-    //     },
-    //     {
-    //         id: 3,
-    //         title: 'Giant Revolt Advanced ',
-    //         type: 'Велосипед гравел',
-    //         price: 95,
-    //         isRented: true
-    //     },
-    //     {
-    //         id: 4,
-    //         title: 'Revolt Advanced ',
-    //         type: 'Велосипед гравел',
-    //         price: 95,
-    //         isRented: false
-    //     }
-    // ];
+    const { bikes, fetchBikes, loading } = useContext(BikeServiceContext);
 
-    const { bikes,fetchBikes,loading } = useContext(BikeServiceContext);
-
-    useEffect(()=>{
+    useEffect(() => {
         fetchBikes();
-    },[]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const rented = bikes.filter(bike => bike.isRented);
     const available = bikes.filter(bike => !bike.isRented);
@@ -54,10 +24,18 @@ function App() {
             <div className="app">
                 <h2 className="font-weight-bold mb-5">Прокат велосипедов</h2>
                 <AddForm />
-                <h4 className="mb-3"><span role="img" aria-label="Star-Struck">🤩</span>&nbsp;Арендованные</h4>
-                { loading ? <Loader/>: <BikeList bikes={rented} />}
-                <h4 className="mb-3"><span role="img" aria-label="Bicycle">🚲</span>&nbsp;Свободные</h4>
-                {loading?<Loader/> : <BikeList bikes={available} />}
+                <h4 className="mb-3">
+                    <span role="img" aria-label="Star-Struck">🤩</span>
+                    &nbsp;Арендованные&nbsp;
+                    <span>({rented.length})</span>
+                </h4>
+                {loading ? <Loader /> : <BikeList bikes={rented} rented={true} />}
+                <h4 className="mb-3">
+                <span role="img" aria-label="Bicycle">🚲</span>
+                &nbsp;Свободные
+                <span>({available.length})</span>
+                </h4>
+                {loading ? <Loader /> : <BikeList bikes={available} rented={false} />}
             </div>
         </div>
     );

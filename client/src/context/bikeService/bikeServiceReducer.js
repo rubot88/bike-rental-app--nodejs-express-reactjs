@@ -1,4 +1,4 @@
-import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES } from '../types';
+import { SHOW_LOADER, HIDE_LOADER, ADD_BIKE, REMOVE_BIKE, FETCH_BIKES, TOGGLE_BIKE_STATUS } from '../types';
 
 const handlers = {
     [SHOW_LOADER]: state => ({
@@ -17,7 +17,15 @@ const handlers = {
         ...state,
         bikes: state.bikes.filter(bike => bike.id !== id)
     }),
-    [FETCH_BIKES]: (state, { payload }) => ({...state, bikes: payload, loading: false }),
+    [FETCH_BIKES]: (state, { payload }) => ({ ...state, bikes: payload, loading: false }),
+    [TOGGLE_BIKE_STATUS]: (state, { payload }) => {
+        return {
+            ...state,
+            bikes: state.bikes.map(bike =>
+                bike.id === payload.id ?
+                    payload : bike)
+        }
+    },
     DEFAULT: state => state
 };
 
