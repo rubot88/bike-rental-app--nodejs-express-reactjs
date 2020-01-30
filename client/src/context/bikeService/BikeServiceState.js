@@ -8,9 +8,98 @@ import { AlertContext } from '../alert/alertContext';
 const url = '/bikes';
 
 export const BikeServiceState = ({ children }) => {
-    return (
-        <BikeServiceProvider>
-            {children}
-        </BikeServiceProvider>
-    );
-};
+        const initialState = {
+            bikes: [],
+            loading: false
+        };
+
+        const [state, dispatch] = useReducer(bikeServiceReducer, initialState);
+        const { show, hide } = useContext(AlertContext);
+
+        const showLoader = () => {
+            dispatch({ type: SHOW_LOADER });
+        };
+
+        const hideLoader = () => {
+            dispatch({ type: HIDE_LOADER });
+        };
+
+        const fetchBikes = async() => {
+            showLoader();
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    const error = await response.json();
+                    show(error.message);
+                } else {
+                    const payload = await response.json();
+                    hideLoader();
+                    payload.length ?
+                        dispatch({ type: FETCH_BIKES, payload }) :
+                        show('There are no bikes to show');
+                }
+                setTimeout(hide, 2000);
+            } catch (e) {
+                console.log(e);
+                throw new Error();
+            }
+        };
+
+        const addBike = async bike => {
+            try {
+                const response = await fetch(`${url}/add`, {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json;charset=utf-8'
+                    },
+                    body: JSON.stringify(bike)
+                });
+                if (response.status !== 201) {
+                    const error = await response.json();
+                    show(error.message);
+                } else {
+                    const payload = await response.json();
+
+                    dispatch({
+                        type: ADD_BIKE,
+                        payload
+                    });
+                    show("Bike was successfully added", 'success');
+                }
+                setTimeout(hide, 2000);
+            } catch (e) {
+                console.log(e);
+                throw new Error();
+            }
+        };
+
+        const removeBike = async id => {
+            const response = await fetch(`${url}/remove/${id}`, { method: "delete" });
+            try {
+                if (!response.ok) {
+                    const error = await response.json();
+                    show(error.message);
+                } else {
+                    dispatch({ type: REMOVE_BIKE, payload: id });
+                    show("Bike was successfully removed", 'success');
+                }
+                setTimeout(hide, 2000);
+            } catch (e) {
+                console.log(e);
+                throw new Error();
+            }
+        };
+
+        return ( 
+            <BikeServiceProvider value = {
+                {
+                    showLoader,
+                    addBike,
+                    removeBike,
+                    fetchBikes,
+                    loading: state.loading,
+                    bikes: state.bikes
+                }
+            } > { children } 
+            </BikeServiceProvider>);
+        };

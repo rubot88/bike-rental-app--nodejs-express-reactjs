@@ -19,20 +19,19 @@ router.get('/', async (req, res) => {
         res.status(200).json(bikes);
 
     } catch (e) {
-        res.status(500).json({ message: 'Unable to save bike!' })
+        res.status(404).json({ message: 'Unable to load bikes!' })
     }
 });
 
 router.post('/add', async (req, res) => {
-    const reqBody = req.body;
+    const reqBike = req.body;
     const bike = new Bike({
-        ...reqBody,
+        ...reqBike,
         isRented: false
     });
     try {
-        const bikes = await Bike.find();
-        await bike.save();
-        res.status(200).json(bikes);
+        const savedBike = await bike.save();
+        res.status(201).json(savedBike);
     } catch (e) {
         console.log('Error: ', e);
         res.status(500).json({ message: 'Unable to save bike!' })
@@ -46,7 +45,7 @@ router.delete('/remove/:id', async (req, res) => {
         res.status(200).json(bikes);
     } catch (e) {
         console.log('Error: ', e);
-        res.status(400).json({ message: 'Cannot remove the bike!' })
+        res.status(500).json({ message: 'Unable to remove bike!' })
     }
 })
 

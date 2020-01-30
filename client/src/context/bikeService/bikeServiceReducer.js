@@ -11,13 +11,13 @@ const handlers = {
     }),
     [ADD_BIKE]: (state, { payload }) => ({
         ...state,
-        notes: [...state.notes, payload]
+        bikes: [...state.bikes, payload]
     }),
     [REMOVE_BIKE]: (state, { payload: id }) => ({
         ...state,
-        notes: state.notes.filter(note => note.id !== id)
+        bikes: state.bikes.filter(bike => bike.id !== id)
     }),
-    [FETCH_BIKES]: (state, { payload }) => ({ ...state, notes: payload, loading: false }),
+    [FETCH_BIKES]: (state, { payload }) => ({ ...state, bikes: payload, loading: false }),
     DEFAULT: state => state
 };
 
