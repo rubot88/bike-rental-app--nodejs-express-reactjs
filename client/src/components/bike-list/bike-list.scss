@@ -1,0 +1,17 @@
+.bike-exit-active {
+    animation: bike 500ms ease-out alternate;
+}
+
+.bike-enter-active{
+  animation: bike 500ms ease-in alternate-reverse;
+}
+
+@keyframes bike {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-200px);
+    }
+}
