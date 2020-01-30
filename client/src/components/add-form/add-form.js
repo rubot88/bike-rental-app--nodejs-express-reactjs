@@ -3,19 +3,16 @@ import React, { Fragment, useState, useContext } from 'react';
 import BikeServiceContext from '../../context/bikeService/bikeServiceContext';
 import AlertContext from '../../context/alert/alertContext';
 import './add-form.scss';
+import { bikeTypes } from '../../utils/bikeTypes';
 
 const AddForm = () => {
-    let bikeTypes = [
-        { value: 'mountainBike', title: 'Горный' },
-        { value: 'cityBike', title: 'Городской' },
-        { value: 'roadBike', title: 'Дорожный' },
-        { value: 'hybridBike', title: 'Гибрид' }
-    ];
+
+    let typesList = Object.keys(bikeTypes);
 
     const { addBike } = useContext(BikeServiceContext);
     const { show, hide } = useContext(AlertContext);
 
-    const [form, setForm] = useState({ title: '', type: 'default', price: '' });
+    const [form, setForm] = useState({ title: '', type: typesList[0], price: '' });
     const { title, type, price } = form;
 
     const changeHandler = event => {
@@ -30,10 +27,11 @@ const AddForm = () => {
             await addBike(form);
             setForm({ ...form, title: '', price: '' });
         }
-        setTimeout(hide,2000);
+        setTimeout(hide, 2000);
     };
 
-    bikeTypes = bikeTypes.map((type, idx) => <option key={idx} value={type.value}>{type.title} </option>)
+    typesList = typesList.map((type, idx) => <option key={idx} value={type}>{bikeTypes[type]}</option>);
+
     return (
         <Fragment>
             <h4 className="mb-3"><span role="img" aria-label="Money-Mouth Face">🤑</span>&nbsp;Добавить новый велосипед</h4>
@@ -41,7 +39,7 @@ const AddForm = () => {
                 className="add-form d-flex justify-content-between p-4 mb-4"
                 onSubmit={submitHandler}>
                 <div className="form-group mr-4 mb-1">
-                    <label htmlFor="bikeTitle" >Название велосипеда</label>
+                    <label htmlFor="bikeTitle">Название велосипеда</label>
                     <input
                         required
                         className="form-control"
@@ -60,7 +58,7 @@ const AddForm = () => {
                         id="bikeType"
                         onChange={changeHandler}
                         value={type}>
-                        {bikeTypes}
+                        {typesList}
                     </select>
                 </div>
                 <div className="form-group mr-4 mb-1">
