@@ -14,6 +14,7 @@ ReactDOM.render(
     <AlertState>
         <ErrorBoundary>
             <BikeServiceState>
+                <Alert />
                 <App />
             </BikeServiceState>
         </ErrorBoundary>
